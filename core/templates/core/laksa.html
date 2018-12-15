@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>LAKSA: твой бухгалтер</title>
+    <link rel="shortcut icon" href="{% static 'images/core/laksa-logo.png' %}">
+    <link rel="stylesheet" href="{% static 'style/core/laksa.css' %}">
+    <link rel="stylesheet" href="{% static 'style/core/bootstrap.min.css' %}">
+    <script src="{% static 'js/jquery-3.2.0.js' %}"></script>
+    <script src="{% static 'js/core/laksa.js' %}"></script>
+</head>
+<body>
+    <div class="layout">
+        <div class="header t1-3">
+            <div>
+                <img src="{% static 'images/core/laksa-logo.svg' %}" alt="">
+                <span>LAKSA: секрет миллионеров</span>
+            </div>
+        </div>
+        <div class="body">
+            <div class="line">
+                <div class="name">Кто</div>
+                <div class="value">
+                    <div class="who-selected">Маша</div>
+                    <div class="known-owners"></div>
+                </div>
+            </div>
+            <div class="line">
+                <div class="name">На что</div>
+                <div class="value">
+                    <div class="target-selected">Штучки всякие там</div>
+                    <div class="known-targets">
+                        {% for target in known_targets %}
+                            <div class="target">{{ target.name }}</div>
+                        {% endfor %}
+                        <div class="new-target">
+                            <input name="new-target" type="text" title="Новая категория">
+                            <img onclick="clickPlus()" src="{% static 'images/core/plus.svg' %}" alt="plus">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer t1-5">
+            <div>zlab @ 2018</div>
+        </div>
+    </div>
+</body>
+</html>
