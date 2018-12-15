@@ -1,17 +1,24 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <title>Title</title>
     <link rel="stylesheet" href="{% static 'style/core/bootstrap.min.css'%}">
 </head>
 <body>
     <div class="container" style="background: pink">
-ccc
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col-2"><img src="{% static 'images/core/laksa-logo.png' %}" alt="logo" style="width: 32px; height: 32px;"></div>
+                    <div class="col"><span>LAKSA: секрет миллионеров</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
