@@ -18,17 +18,12 @@
   position: relative;
   margin: auto; }
 
-.header {
-  text-align: center;
-  padding: 10px 0 10px 0;
-  vertical-align: top; }
-  .header img {
-    width: 32px;
-    height: 32px; }
-  .header span {
-    vertical-align: top;
-    margin: 5px 0 0 30px;
-    display: inline-block; }
+.header .title {
+  padding-top: 3px;
+  margin: 0 15px; }
+.header img {
+  width: 32px;
+  height: 32px; }
 
 .footer {
   color: gray;
@@ -36,5 +31,52 @@
 
 .line {
   margin-top: 10px; }
+
+.error {
+  color: darkred;
+  font-size: 1.2em;
+  padding: 15px;
+  margin: 10px;
+  border: 1px solid darkred;
+  text-align: center;
+  border-radius: 5px; }
+
+.button {
+  text-align: center;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 5px 0; }
+
+.separator {
+  width: 100%;
+  height: 3px;
+  background: lightgray; }
+
+.separator-1 {
+  margin: 20px 0 10px 0; }
+
+.separator-2 {
+  margin: 10px 0 20px 0; }
+
+.input-row {
+  margin: 0 15px; }
+
+.button-row {
+  padding: 0 15px 15px 0; }
+
+.new-target {
+  display: none;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  margin: 15px;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  background: white;
+  width: calc(100% - 30px);
+  box-sizing: border-box;
+  max-width: 760px; }
+  .new-target .title {
+    margin: 10px 0 0 15px; }
 
 /*# sourceMappingURL=laksa.css.map */

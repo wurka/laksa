@@ -5,5 +5,6 @@ import core.views
 urlpatterns = [
 	path('', core.views.main),
 	path('test/', core.views.test),
-	path('x/', core.views.main)
+	path('x/', core.views.main),
+	path("new-target/", core.views.new_target),
 ]

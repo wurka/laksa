@@ -19,3 +19,19 @@ def main(request):
 
 def test(request):
 	return render(request, 'core/test.html')
+
+
+def new_target(request):
+	if "newTarget" not in request.POST:
+		return HttpResponse("there is no newTarget parameter", status=500)
+
+	val = request.POST["newTarget"]
+	ntar = ". ".join([x.strip().capitalize() for x in val.split(".")])
+
+	same = Target.objects.filter(name=ntar)
+
+	if len(same) > 0:
+		return HttpResponse("Такая запись уже есть в базе данных", status=500)
+
+	Target.objects.create(name=ntar)
+	return HttpResponse("OK")

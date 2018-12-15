@@ -20,7 +20,7 @@
                     <div class="col"><span>LAKSA: секрет миллионеров</span></div>
                 </div>
                 <div class="row line">
-                    <div class="col-4" style="padding-top: 6px;"><span>Кто</span></div>
+                    <div class="col-3" style="padding-top: 15px;"><span>Кто</span></div>
                     <div class="col line">
                         <select name="who-select" class="form-control" id="who-select" onchange="console.log(parseInt($('#who-select').val()))">
                             <option value="1">Маша</option>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="row line">
-                    <div class="col-4" style="padding-top: 6px"><span>На что</span></div>
+                    <div class="col-3" style="padding-top: 6px"><span>На что</span></div>
                     <div class="col">
                         <select name="what-select" id="what-select" class="form-control">
                             <option value="1">Авто. Бензин</option>
@@ -41,11 +41,24 @@
                     </div>
                 </div>
                 <div class="row line">
-                    <div class="col-4"></div>
+                    <div class="col-3" style="padding-top: 6px">
+                        <span>Сколько</span>
+                    </div>
+                    <div class="col">
+                        <input type="text" name="howmuch" id="how-much" class="form-control">
+                    </div>
+                </div>
+                <div class="row line">
+                    <div class="col-3"></div>
                     <div class="col">
                         <input type="button" value="Внести" class="form-control">
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="error">Ошибка</div>
             </div>
         </div>
     </div>
