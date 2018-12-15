@@ -35,41 +35,6 @@
   text-align: right; }
 
 .line {
-  margin: 5px 0 5px 0; }
-  .line .name {
-    display: inline-block;
-    vertical-align: top;
-    width: 100px;
-    padding: 10px 0 10px 0; }
-  .line .value {
-    display: inline-block;
-    vertical-align: top; }
-
-.who-selected {
-  box-sizing: border-box;
-  border: 1px solid black;
-  padding: 10px;
-  width: 400px;
-  text-align: center; }
-
-.target-selected {
-  box-sizing: border-box;
-  border: 1px solid black;
-  padding: 10px;
-  width: 400px;
-  text-align: center; }
-
-.new-target {
-  margin: 5px 0 0 0; }
-  .new-target img {
-    width: 32px;
-    height: 32px; }
-  .new-target input {
-    line-height: 28px;
-    border: 2px solid lightgray;
-    text-align: center;
-    vertical-align: top;
-    width: 360px;
-    opacity: 0; }
+  margin-top: 10px; }
 
 /*# sourceMappingURL=laksa.css.map */
