@@ -90,3 +90,8 @@ function targetChanged() {
     }
 }
 
+function loadFile() {
+    $.ajax({
+        url: "/laksa/load-file/"
+    })
+}
