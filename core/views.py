@@ -84,3 +84,7 @@ def load_file(request):
 			)
 
 	return HttpResponse("OK")
+
+
+def view(request):
+	return render(request, 'core/view.html')

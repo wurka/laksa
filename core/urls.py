@@ -7,5 +7,6 @@ urlpatterns = [
 	path('test/', core.views.test),
 	path('x/', core.views.main),
 	path("new-target/", core.views.new_target),
-	path("load-file/", core.views.load_file)
+	path("load-file/", core.views.load_file),
+	path("view", core.views.view)
 ]
