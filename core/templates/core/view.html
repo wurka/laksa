@@ -1,12 +1,92 @@
+{% load static %}
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon shortcut" href="{% static 'images/core/laksa-logo.png' %}">
+    <link rel="stylesheet" href="{% static 'style/core/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'style/core/laksa.css' %}">
     <title>LAKSA: просмотр</title>
+    <script src="{% static 'js/jquery-3.2.0.js' %}"></script>
 </head>
 <body>
+    <div class="layout" id="app">
+        {% csrf_token %}
+        <div class="new-target" style="display: none;" v-if="showNewTarget">
+            <div class="title">
+                Добавить новую цель
+            </div>
+            <div class="separator separator-1"></div>
+            <div>
+                <div class="row input-row">
+                    <div class="col">
+                        <input type="text" class="form-control" id="new-target-value" title="Новая цель">
+                    </div>
+                </div>
+            </div>
+            <div class="separator separator-2"></div>
+            <div class="row button-row">
+                <div class="col"></div>
+                <div class="col-4">
+                    <div class="button" onclick="submitNewTarget()">OK</div>
+                </div>
+                <div class="col-4">
+                    <div class="button" onclick="hideNewTarget()">Отмена</div>
+                </div>
+            </div>
+        </div>
 
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="row line header">
+                        <div class="col-2"><img src="{% static 'images/core/laksa-logo.png' %}" alt="logo"></div>
+                        <div class="col title"><span>LAKSA: секрет миллионеров</span></div>
+                    </div>
+                    <div class="row line">
+                        <div class="col-3" style="padding-top: 15px;"><span>Кто</span></div>
+                        <div class="col line">
+                            <select name="who-select" class="form-control" id="who-select" v-on:change="authorOnChange">
+                                <option v-for="author, author_id in authors" v-bind:value="author_id">[[author.name]]</option>
+                                <option value="-1">...Добавить...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row line">
+                        <div class="col-3" style="padding-top: 6px"><span>На что</span></div>
+                        <div class="col">
+                            <select name="what-select" id="what-select" class="form-control" v-on:change="targetOnChange">
+                                <option v-for="target, target_id in targets" v-bind:value="target_id">[[target.title]]</option>
+                                <option value="-1">...Добавить...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row line">
+                        <div class="col-3" style="padding-top: 6px">
+                            <span>Сколько</span>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="howmuch" id="how-much" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row line">
+                        <div class="col-3"></div>
+                        <div class="col">
+                            <input type="button" value="Внести" class="form-control" v-on:click="submit()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" v-if="showError">
+                <div class="col">
+                    <div class="error">[[errorMessage]]</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/vue.js' %}"></script>
+    <script src="{% static 'js/core/view.js' %}"></script>
 </body>
 </html>
