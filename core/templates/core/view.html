@@ -12,7 +12,7 @@
     <script src="{% static 'js/jquery-3.2.0.js' %}"></script>
 </head>
 <body>
-    <div class="layout" id="app">
+    <div class="layout" id="app" v-cloak="'...loading...'">
         {% csrf_token %}
         <div class="new-target" style="display: none;" v-if="showNewTarget">
             <div class="title">
@@ -49,16 +49,67 @@
                         <div class="col-3" style="padding-top: 15px;"><span>Кто</span></div>
                         <div class="col line">
                             <select name="who-select" class="form-control" id="who-select" v-on:change="authorOnChange">
-                                <option v-for="author, author_id in authors" v-bind:value="author_id">[[author.name]]</option>
+                                <option v-for="author, author_id in authors" v-bind:value="author.id">[[author.name]]</option>
                                 <option value="-1">...Добавить...</option>
                             </select>
                         </div>
                     </div>
                     <div class="row line">
+                        <div class="col-3" style="padding-top: 5px;"><span>Когда</span></div>
+                        <div class="col line date calendar">
+                            <div class="day">
+                                <div type="text" name="day" class="form-control num-input"
+                                       onclick="$('.all').hide(); $('.all.days').fadeIn(300);">
+                                    [[ selectedDay ]]
+                                </div>
+                                <div class="all days">
+                                    <div class="line" v-for="lineNumber in 4">
+                                        <div class="one-day" v-for="number in 7" :id="'day-' + ((lineNumber-1)*7 + number)"
+                                             @click="selectThisDay((lineNumber-1)*7 + number)"
+                                        >[[ (lineNumber-1)*7 + number]]</div>
+                                    </div>
+                                    <div class="line">
+                                        <div class="one-day" v-for="number in 3" :id="'day-' + (28 + number)"
+                                             @click="selectThisDay(28 + number)"
+                                        >[[ 28 + number]]</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="month">
+                                <div type="text" name="month" class="form-control num-input"
+                                       onclick="$('.all').hide(); $('.all.months').fadeIn(300);">
+                                    [[ selectedMonth ]]
+                                </div>
+                                <div class="all months">
+                                    <div class="line" v-for="lineNumber in 3">
+                                        <div class="one-day" v-for="number in 4" :id="'month-' + ((lineNumber-1)*4 + number)"
+                                             @click="selectThisMonth((lineNumber-1)*4 + number)"
+                                        >[[ (lineNumber-1)*4 + number]]</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="year">
+                                <div type="text" name="year" class="form-control num-input"
+                                       onclick="$('.all').hide(); $('.all.years').fadeIn(300);">
+                                    [[ selectedYear ]]
+                                </div>
+                                <div class="all years">
+                                    <div class="line" v-for="lineNumber in 3">
+                                        <div class="one-year" v-for="number in 4" :id="'year-' + ((lineNumber-1)*4 +2018+number)"
+                                             @click="selectThisYear((lineNumber-1)*4 +2018+number)"
+                                        >[[ (lineNumber-1)*4 +2018+number]]</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row line">
                         <div class="col-3" style="padding-top: 6px"><span>На что</span></div>
                         <div class="col">
-                            <select name="what-select" id="what-select" class="form-control" v-on:change="targetOnChange">
-                                <option v-for="target, target_id in targets" v-bind:value="target_id">[[target.title]]</option>
+                            <select name="what-select" id="what-select" class="form-control"
+                                    v-on:change="targetOnChange">
+                                <option v-for="target, target_id in targets" v-bind:value="target.id">[[target.name]]</option>
                                 <option value="-1">...Добавить...</option>
                             </select>
                         </div>
@@ -68,13 +119,13 @@
                             <span>Сколько</span>
                         </div>
                         <div class="col">
-                            <input type="text" name="howmuch" id="how-much" class="form-control">
+                            <input type="number" name="howmuch" id="how-much" class="form-control">
                         </div>
                     </div>
                     <div class="row line">
                         <div class="col-3"></div>
                         <div class="col">
-                            <input type="button" value="Внести" class="form-control" v-on:click="submit()">
+                            <input type="button" value="Внести" class="form-control" v-on:click="submit">
                         </div>
                     </div>
                 </div>
@@ -82,6 +133,12 @@
             <div class="row" v-if="showError">
                 <div class="col">
                     <div class="error">[[errorMessage]]</div>
+                </div>
+            </div>
+            <div class="display">
+                <div class="row target" v-for="target in spendToday">
+                    <div class="name col-6">[[ target.name ]]</div>
+                    <div class="value col-6">[[ target.how_much ]]</div>
                 </div>
             </div>
         </div>

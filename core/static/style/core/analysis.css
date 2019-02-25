@@ -1,0 +1,86 @@
+[v-cloak] {
+  display: none; }
+
+.calendar {
+  display: flex;
+  margin: 0; }
+  .calendar .all {
+    position: absolute;
+    z-index: 1;
+    background: white;
+    border: 1px solid #37DDA0;
+    margin: 5px 0 0 0;
+    display: none; }
+  .calendar .all.days {
+    user-select: none; }
+  .calendar .day {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding-right: 5px; }
+    .calendar .day input {
+      display: block;
+      width: calc(100% - 10px); }
+  .calendar .month {
+    flex-grow: 1;
+    flex-basis: 0;
+    display: block;
+    padding: 0 2px; }
+    .calendar .month input {
+      display: block;
+      width: calc(100% - 10px); }
+  .calendar .year {
+    flex-grow: 1;
+    flex-basis: 0;
+    display: block;
+    padding-left: 5px; }
+    .calendar .year input {
+      display: block;
+      width: calc(100% - 10px); }
+  .calendar .line {
+    display: flex;
+    margin: 0; }
+    .calendar .line .one-day {
+      width: 30px;
+      text-align: center;
+      background: #BCFFDB;
+      margin: 3px;
+      cursor: default; }
+      .calendar .line .one-day:hover {
+        background: #8DFFCD; }
+    .calendar .line .one-day.selected {
+      background: #4F9D69; }
+    .calendar .line .one-year {
+      width: 70px;
+      text-align: center;
+      background: #BCFFDB;
+      margin: 3px;
+      cursor: default; }
+      .calendar .line .one-year:hover {
+        background: #8DFFCD; }
+    .calendar .line .one-year.selected {
+      background: #4F9D69; }
+
+.line {
+  display: flex;
+  }
+  .line .name {
+    width: 60px;
+    padding-top: 5px; }
+  .line .value {
+    flex-grow: 1; }
+
+.display {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto; }
+
+.target .line {
+  display: flex; }
+.target .name {
+  width: 300px;
+  padding: 0; }
+.target .value {
+  flex-grow: 1; }
+.target:nth-child(2n) .line {
+  background: #BCFFDB; }
+
+/*# sourceMappingURL=analysis.css.map */

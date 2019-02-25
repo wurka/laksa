@@ -7,83 +7,7 @@ $color-5: #4F9D69
 [v-cloak]
   display: none
 
-.t1-1
-  font-size: 24px
-.t1-2
-  font-size: 20px
-.t1-3
-  font-size: 18px
-.t1-4
-  font-size: 16px
-.t1-5
-  font-size: 14px
-
-.layout
-  width: 600px
-  position: relative
-  margin: auto
-
-.header
-  .title
-    padding-top: 3px
-    margin: 0 15px
-  img
-    width: 32px
-    height: 32px
-
-.footer
-  color: gray
-  text-align: right
-
-
-.line
-  margin-top: 10px
-
-.error
-  color: darkred
-  font-size: 1.2em
-  padding: 15px
-  margin: 10px
-  border: 1px solid darkred
-  text-align: center
-  border-radius: 5px
-
-.button
-  text-align: center
-  border: 1px solid lightgray
-  border-radius: 3px
-  padding: 5px 0
-
-.separator
-  width: 100%
-  height: 3px
-  background: lightgray
-.separator-1
-  margin: 20px 0 10px 0
-.separator-2
-  margin: 10px 0 20px 0
-.input-row
-  margin: 0 15px
-.button-row
-  padding: 0 15px 15px 0
-
-
-.new-target
-  display: none
-  border: 1px solid lightgray
-  border-radius: 5px
-  margin: 15px
-  position: absolute
-  top: 0
-  z-index: 10
-  background: white
-  //width: calc(100% - 30px)
-  box-sizing: border-box
-  max-width: 760px
-  .title
-    margin: 10px 0 0 15px
-
-.calendar.date
+.calendar
   display: flex
   margin: 0
   .all
@@ -122,7 +46,7 @@ $color-5: #4F9D69
     display: flex
     margin: 0
     .one-day
-      border: 1px solid #000
+      //border: 1px solid #000
       width: 30px
       text-align: center
       background: $color-3
@@ -133,7 +57,7 @@ $color-5: #4F9D69
     .one-day.selected
       background: $color-5
     .one-year
-      border: 1px solid #000
+      //border: 1px solid #000
       width: 70px
       text-align: center
       background: $color-3
@@ -144,3 +68,26 @@ $color-5: #4F9D69
     .one-year.selected
       background: $color-5
 
+.line
+  display: flex
+  .name
+    width: 60px
+    padding-top: 5px
+  .value
+    flex-grow: 1
+
+.display
+  max-height: calc(100vh - 200px)
+  overflow-y: auto
+
+.target
+  .line
+    display: flex
+  .name
+    width: 300px
+    padding: 0
+  .value
+    flex-grow: 1
+  &:nth-child(2n)
+    .line
+      background: $color-3

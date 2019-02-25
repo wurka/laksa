@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LAKSA: анализ</title>
+    <link rel="icon shortcut" href="{% static 'images/core/laksa-logo.png' %}">
+    <link rel="stylesheet" href="{% static 'style/core/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'style/core/analysis.css' %}">
+    <script src="{% static 'js/jquery-3.2.0.js' %}"></script>
+</head>
+<body>
+    <div class="layout container" id="app">
+        <div class="row header">
+            <div class="col-2" onclick="window.location='/laksa'"><img src="{% static 'images/core/laksa-logo.png' %}" alt="logo"></div>
+            <div class="col title"><span>LAKSA: секрет миллионеров</span></div>
+        </div>
+        <div class="line">
+            <div class="name">
+                От
+            </div>
+            <div class="value">
+                <div class="line date calendar" id="calendarFrom" v-cloak>
+                    <div class="day">
+                        <div type="text" name="day" class="form-control num-input"
+                               onclick="appCalendarFrom.openInputs('days')">
+                            [[ selectedDay ]]
+                        </div>
+                        <div class="all days">
+                            <div class="line" v-for="lineNumber in 4">
+                                <div class="one-day" v-for="number in 7" :class="'day-' + ((lineNumber-1)*7 + number)"
+                                     @click="selectThisDay((lineNumber-1)*7 + number)"
+                                >[[ (lineNumber-1)*7 + number]]</div>
+                            </div>
+                            <div class="line">
+                                <div class="one-day" v-for="number in 3" :class="'day-' + (28 + number)"
+                                     @click="selectThisDay((lineNumber-1)*7 + number)"
+                                >[[ 28 + number]]</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="month">
+                        <div type="text" name="month" class="form-control num-input"
+                               onclick="appCalendarFrom.openInputs('months')">
+                            [[ selectedMonth ]]
+                        </div>
+                        <div class="all months">
+                            <div class="line" v-for="lineNumber in 3">
+                                <div class="one-day" v-for="number in 4" :class="'month-' + ((lineNumber-1)*4 + number)"
+                                     @click="selectThisMonth((lineNumber-1)*4 + number)"
+                                >[[ (lineNumber-1)*4 + number]]</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="year">
+                        <div type="text" name="year" class="form-control num-input"
+                               onclick="appCalendarFrom.openInputs('years')">
+                            [[ selectedYear ]]
+                        </div>
+                        <div class="all years">
+                            <div class="line" v-for="lineNumber in 3">
+                                <div class="one-year" v-for="number in 4" :class="'year-' + ((lineNumber-1)*4 +2010+number)"
+                                     @click="selectThisYear((lineNumber-1)*4 +2010+number)"
+                                >[[ (lineNumber-1)*4 +2010+number]]</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="line">
+            <div class="name">
+                До
+            </div>
+            <div class="value">
+                <div class="line date calendar" id="calendarTo" v-cloak>
+                    <div class="day">
+                        <div type="text" name="day" class="form-control num-input"
+                               onclick="appCalendarTo.openInputs('days')">
+                            [[ selectedDay ]]
+                        </div>
+                        <div class="all days">
+                            <div class="line" v-for="lineNumber in 4">
+                                <div class="one-day" v-for="number in 7" :class="'day-' + ((lineNumber-1)*7 + number)"
+                                     @click="selectThisDay((lineNumber-1)*7 + number)"
+                                >[[ (lineNumber-1)*7 + number]]</div>
+                            </div>
+                            <div class="line">
+                                <div class="one-day" v-for="number in 3" :class="'day-' + (28 + number)"
+                                     @click="selectThisDay((lineNumber-1)*7 + number)"
+                                >[[ 28 + number]]</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="month">
+                        <div type="text" name="month" class="form-control num-input"
+                               onclick="appCalendarTo.openInputs('months')">
+                            [[ selectedMonth ]]
+                        </div>
+                        <div class="all months">
+                            <div class="line" v-for="lineNumber in 3">
+                                <div class="one-day" v-for="number in 4" :class="'month-' + ((lineNumber-1)*4 + number)"
+                                     @click="selectThisMonth((lineNumber-1)*4 + number)"
+                                >[[ (lineNumber-1)*4 + number]]</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="year">
+                        <div type="text" name="year" class="form-control num-input"
+                               onclick="appCalendarTo.openInputs('years')">
+                            [[ selectedYear ]]
+                        </div>
+                        <div class="all years">
+                            <div class="line" v-for="lineNumber in 3">
+                                <div class="one-year" v-for="number in 4" :class="'year-' + ((lineNumber-1)*4 +2010+number)"
+                                     @click="selectThisYear((lineNumber-1)*4 +2010+number)"
+                                >[[ (lineNumber-1)*4 +2010+number]]</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="display" id="display">
+            <div class="target" v-for="target in targets">
+                <div class="line">
+                    <div class="name">[[ target.name ]]</div>
+                    <div class="value">[[ target.how_much ]]</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/vue.js' %}"></script>
+    <script src="{% static 'js/core/analysis.js' %}"></script>
+</body>
+</html>

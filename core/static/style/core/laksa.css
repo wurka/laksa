@@ -1,3 +1,6 @@
+[v-cloak] {
+  display: none; }
+
 .t1-1 {
   font-size: 24px; }
 
@@ -73,10 +76,70 @@
   top: 0;
   z-index: 10;
   background: white;
-  width: calc(100% - 30px);
   box-sizing: border-box;
   max-width: 760px; }
   .new-target .title {
     margin: 10px 0 0 15px; }
+
+.calendar.date {
+  display: flex;
+  margin: 0; }
+  .calendar.date .all {
+    position: absolute;
+    z-index: 1;
+    background: white;
+    border: 1px solid #37DDA0;
+    margin: 5px 0 0 0;
+    display: none; }
+  .calendar.date .all.days {
+    user-select: none; }
+  .calendar.date .day {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding-right: 5px; }
+    .calendar.date .day input {
+      display: block;
+      width: calc(100% - 10px); }
+  .calendar.date .month {
+    flex-grow: 1;
+    flex-basis: 0;
+    display: block;
+    padding: 0 2px; }
+    .calendar.date .month input {
+      display: block;
+      width: calc(100% - 10px); }
+  .calendar.date .year {
+    flex-grow: 1;
+    flex-basis: 0;
+    display: block;
+    padding-left: 5px; }
+    .calendar.date .year input {
+      display: block;
+      width: calc(100% - 10px); }
+  .calendar.date .line {
+    display: flex;
+    margin: 0; }
+    .calendar.date .line .one-day {
+      border: 1px solid #000;
+      width: 30px;
+      text-align: center;
+      background: #BCFFDB;
+      margin: 3px;
+      cursor: default; }
+      .calendar.date .line .one-day:hover {
+        background: #8DFFCD; }
+    .calendar.date .line .one-day.selected {
+      background: #4F9D69; }
+    .calendar.date .line .one-year {
+      border: 1px solid #000;
+      width: 70px;
+      text-align: center;
+      background: #BCFFDB;
+      margin: 3px;
+      cursor: default; }
+      .calendar.date .line .one-year:hover {
+        background: #8DFFCD; }
+    .calendar.date .line .one-year.selected {
+      background: #4F9D69; }
 
 /*# sourceMappingURL=laksa.css.map */

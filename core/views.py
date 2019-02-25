@@ -1,28 +1,36 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.db.models import Sum
 from core.models import Owner, Target, Instance
 from datetime import date
+import json
+from django.contrib.auth import authenticate, login
 
 
 # Create your views here.
 def main(request):
+	return HttpResponse("deleted")
 	params = dict()
-	known_owners = Owner.objects.all()
-	known_targets = Target.objects.all().order_by("name")
-	all_instances = Instance.objects.all()
+	# known_owners = Owner.objects.all()
+	# known_targets = Target.objects.all().order_by("name")
+	# all_instances = Instance.objects.all()
 
-	params["konwn_owners"] = known_owners
-	params["known_targets"] = known_targets
-	params["instances"] = all_instances
+	# params["konwn_owners"] = known_owners
+	# params["known_targets"] = known_targets
+	# params["instances"] = all_instances
 
-	return render(request, 'core/laksa.html', params)
+	# return render(request, 'core/laksa.html', params)
 
 
 def test(request):
-	return render(request, 'core/test.html')
+	return HttpResponse("deleted")
+	# return render(request, 'core/test.html')
 
 
 def new_target(request):
+	if not request.user.is_authenticated:
+		return HttpResponse(status=403)
+
 	if "newTarget" not in request.POST:
 		return HttpResponse("there is no newTarget parameter", status=500)
 
@@ -39,6 +47,8 @@ def new_target(request):
 
 
 def load_file(request):
+	if not request.user.is_authenticated:
+		return HttpResponse(status=403)
 	# all_targets = [x.name for x in Target.objects.all()]
 	# all_owners = ["Маша", "Саша", "Саша и Маша"]
 	Target.objects.all().delete()
@@ -86,5 +96,126 @@ def load_file(request):
 	return HttpResponse("OK")
 
 
+def for_login_only(request, path):
+	error = ""
+	if not request.user.is_authenticated:
+		if "login" in request.POST:
+			if "password" in request.POST:
+				user = authenticate(username=request.POST['login'], password=request.POST['password'])
+				if user is not None:
+					if user.is_active:
+						login(request, user)
+						return render(request, path)
+					else:
+						error = u"Этот аккаунт заблокирован"
+				else:
+					error = u"Похоже, логин/пароль не верен"
+		return render(request, 'core/auth.html', {"error": error})
+	return render(request, path)
+
+
 def view(request):
-	return render(request, 'core/view.html')
+	return for_login_only(request, 'core/view.html')
+
+
+def analysis(request):
+	return for_login_only(request, 'core/analysis.html')
+
+
+def get_analysis_data(request):
+	if not request.user.is_authenticated:
+		return HttpResponse(status=403)
+
+	must_be = ["fromYear", "fromMonth", "fromDay", "toYear", "toMonth", "toDay"]
+	for must in must_be:
+		if must not in request.GET:
+			return HttpResponse("there is no parameter {}".format(must), status=500)
+
+	try:
+		fy = int(request.GET["fromYear"])
+		fm = int(request.GET["fromMonth"])
+		fd = int(request.GET["fromDay"])
+		ty = int(request.GET["toYear"])
+		tm = int(request.GET["toMonth"])
+		td = int(request.GET["toDay"])
+	except ValueError:
+		return HttpResponse("wrong value", status=500)
+
+	d_from = date(fy, fm, fd)
+	d_to = date(ty, tm, td)
+	result = Instance.objects.filter(when__gte=d_from, when__lte=d_to)\
+		.values('target__name', 'target_id')\
+		.annotate(sum=Sum('how_much'))\
+		.order_by('target__name')[:1000]
+
+	ans = [{
+		'id': r['target_id'],
+		'name': r['target__name'],
+		'how_much': r['sum']
+	} for r in result]
+
+	ans = json.dumps(ans)
+	return HttpResponse(ans)
+
+
+def get_authors(request):
+	if not request.user.is_authenticated:
+		return HttpResponse(status=403)
+
+	owners = Owner.objects.all().values('name', 'id')
+	owners = json.dumps([{
+		'id': x['id'],
+		'name': x['name']
+	} for x in owners])
+	return HttpResponse(owners)
+
+
+def get_targets(request):
+	if not request.user.is_authenticated:
+		return HttpResponse(status=403)
+
+	targets = Target.objects.all().values("name", 'id').order_by("name")
+	targets = json.dumps([{
+		'id': x['id'],
+		'name': x['name']
+	} for x in targets])
+	return HttpResponse(targets)
+
+
+def new_record(request):
+	if not request.user.is_authenticated:
+		return HttpResponse(status=403)
+
+	must_be = ["author", 'target', 'howmuch', 'year', 'month', 'day']
+	for must in must_be:
+		if must not in request.POST:
+			return HttpResponse("there is no parameter {}".format(must), status=500)
+	try:
+		author_id = int(request.POST["author"])
+		target_id = int(request.POST["target"])
+		how_much = int(request.POST["howmuch"])
+		year = int(request.POST["year"])
+		month = int(request.POST["month"])
+		day = int(request.POST["day"])
+	except ValueError:
+		return HttpResponse("not valid value of parameter", status=500)
+
+	try:
+		own = Owner.objects.get(id=author_id)
+		tar = Target.objects.get(id=target_id)
+		when = date(year, month, day)
+	except Owner.DoesNotExist:
+		return HttpResponse("invalid owner", status=500)
+	except Target.DoesNotExist:
+		return HttpResponse("invalid target", status=500)
+	except TypeError:
+		return HttpResponse("wrong date", status=500)
+
+	has = Instance.objects.filter(
+		owner=own, target=tar, when=when, how_much=how_much)[:1]
+	if len(has) > 0:
+		return HttpResponse(u"Запись уже есть в базе данных", status=500)
+
+	record = Instance(owner=own, target=tar, when=when, how_much=how_much)
+	record.save()
+	return HttpResponse("OK")
