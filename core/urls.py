@@ -14,4 +14,5 @@ urlpatterns = [
 	path("get-authors", core.views.get_authors),
 	path("get-targets", core.views.get_targets),
 	path("new-record", core.views.new_record),
+	path("get-last-used-targets", core.views.get_last_used_targets),
 ]

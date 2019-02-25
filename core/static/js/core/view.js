@@ -8,12 +8,14 @@ let app = new Vue({
         targets: {
         },
         showError: false,
+        errorMessage: "",
         selectedDay: 1,
         selectedMonth: 1,
         selectedYear: 2019,
         selectedAuthor: undefined,
         selectedTarget: undefined,
         spendToday: [],
+        lastUsedTargets: [],
     },
     methods: {
         authorOnChange: function (e) {
@@ -23,8 +25,13 @@ let app = new Vue({
         },
         targetOnChange: function (e) {
             console.log("targetOnChange");
-            console.log(e.target.value);
-            this.selectedTarget = e.target.value;
+            if (e.target) {
+                this.selectedTarget = e.target.value;
+            } else {
+                this.selectedTarget = e;
+                $("#what-select").val(e);
+            }
+
         },
         selectThisDay: function (e) {
             console.log("selectThisDay");
@@ -81,6 +88,17 @@ let app = new Vue({
                     console.log(data.responseText);
                 }
             });
+
+            $.ajax({
+                url: '/laksa/get-last-used-targets',
+                success: function (data) {
+                    app.lastUsedTargets = JSON.parse(data);
+                },
+                error: function (data) {
+                    app.errorMessage = data.responseText;
+                    app.showError = true;
+                }
+            })
         },
         submit: function () {
             if (

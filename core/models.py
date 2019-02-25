@@ -8,6 +8,7 @@ class Target(models.Model):
 	Цель траты
 	"""
 	name = models.TextField(default="")
+	last_used = models.DateTimeField(default=date(2010, 1, 1))
 
 
 class Owner(models.Model):
