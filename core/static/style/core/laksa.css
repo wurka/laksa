@@ -142,4 +142,16 @@
     .calendar.date .line .one-year.selected {
       background: #4F9D69; }
 
+.blank {
+  width: 165px; }
+
+.last-used-target {
+  flex-basis: 0;
+  flex-grow: 1;
+  margin: 10px 5px 0 0;
+  overflow: hidden;
+  white-space: nowrap; }
+  .last-used-target:last-child {
+    margin: 10px 0 0 0; }
+
 /*# sourceMappingURL=laksa.css.map */

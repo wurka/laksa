@@ -96,9 +96,9 @@
                                 </div>
                                 <div class="all years">
                                     <div class="line" v-for="lineNumber in 3">
-                                        <div class="one-year" v-for="number in 4" :id="'year-' + ((lineNumber-1)*4 +2018+number)"
-                                             @click="selectThisYear((lineNumber-1)*4 +2018+number)"
-                                        >[[ (lineNumber-1)*4 +2018+number]]</div>
+                                        <div class="one-year" v-for="number in 4" :id="'year-' + ((lineNumber-1)*4 +2017+number)"
+                                             @click="selectThisYear((lineNumber-1)*4 +2017+number)"
+                                        >[[ (lineNumber-1)*4 +2017+number]]</div>
                                     </div>
                                 </div>
                             </div>
@@ -112,6 +112,13 @@
                                 <option v-for="target, target_id in targets" v-bind:value="target.id">[[target.name]]</option>
                                 <option value="-1">...Добавить...</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="blank"></div>
+                        <div class="last-used-target col-2 form-control" v-for="lu in lastUsedTargets"
+                             @click="targetOnChange(lu.id)">
+                            [[ lu.name]]
                         </div>
                     </div>
                     <div class="row line">

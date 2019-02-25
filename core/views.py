@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Sum
 from core.models import Owner, Target, Instance
-from datetime import date
+from datetime import date, datetime
 import json
 from django.contrib.auth import authenticate, login
 
@@ -92,34 +92,37 @@ def load_file(request):
 				target=target,
 				owner=owner
 			)
-
 	return HttpResponse("OK")
 
 
-def for_login_only(request, path):
-	error = ""
-	if not request.user.is_authenticated:
-		if "login" in request.POST:
-			if "password" in request.POST:
-				user = authenticate(username=request.POST['login'], password=request.POST['password'])
-				if user is not None:
-					if user.is_active:
-						login(request, user)
-						return render(request, path)
+def for_login_only(func):
+	def wraper(request):
+		error = ""
+		if not request.user.is_authenticated:
+			if "login" in request.POST:
+				if "password" in request.POST:
+					user = authenticate(username=request.POST['login'], password=request.POST['password'])
+					if user is not None:
+						if user.is_active:
+							login(request, user)
+							return func(request)
+						else:
+							error = u"Этот аккаунт заблокирован"
 					else:
-						error = u"Этот аккаунт заблокирован"
-				else:
-					error = u"Похоже, логин/пароль не верен"
-		return render(request, 'core/auth.html', {"error": error})
-	return render(request, path)
+						error = u"Похоже, логин/пароль не верен"
+			return render(request, 'core/auth.html', {"error": error})
+		return func(request)
+	return wraper
 
 
+@for_login_only
 def view(request):
-	return for_login_only(request, 'core/view.html')
+	return render(request, 'core/view.html')
 
 
+@for_login_only
 def analysis(request):
-	return for_login_only(request, 'core/analysis.html')
+	return render(request, 'core/analysis.html')
 
 
 def get_analysis_data(request):
@@ -217,5 +220,17 @@ def new_record(request):
 		return HttpResponse(u"Запись уже есть в базе данных", status=500)
 
 	record = Instance(owner=own, target=tar, when=when, how_much=how_much)
+	tar.last_used = datetime.now()
+	tar.save()
 	record.save()
 	return HttpResponse("OK")
+
+
+def get_last_used_targets(request):
+	lus = Target.objects.all().order_by("-last_used")[:4]
+	lus = [{
+		"id": x.id,
+		"name": x.name
+	} for x in lus]
+	ans = json.dumps(lus)
+	return HttpResponse(ans)
