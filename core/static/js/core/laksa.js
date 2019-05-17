@@ -27,7 +27,7 @@ function submitNewTarget() {
     let newTarget = $("#new-target-value").val();
 
     $.ajax({
-        url: '/laksa/new-target/',
+        url: '/new-target/',
         method: "POST",
         data: {
             "csrfmiddlewaretoken": $("input[name=csrfmiddlewaretoken]").val(),
@@ -92,6 +92,6 @@ function targetChanged() {
 
 function loadFile() {
     $.ajax({
-        url: "/laksa/load-file/"
+        url: "/load-file/"
     })
 }

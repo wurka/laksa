@@ -113,7 +113,7 @@ let app = new Vue({
     methods: {
         onDateChange: function () {
             $.ajax({
-                url: '/laksa/get-analysis-data',
+                url: '/get-analysis-data',
                 data: {
                     "fromYear": appCalendarFrom.selectedYear,
                     "fromMonth": appCalendarFrom.selectedMonth,

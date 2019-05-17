@@ -71,7 +71,7 @@ let app = new Vue({
         },
         onDateChange: function () {
             $.ajax({
-                url: '/laksa/get-analysis-data',
+                url: '/get-analysis-data',
                 data: {
                     'fromYear': this.selectedYear,
                     'fromMonth': this.selectedMonth,
@@ -90,7 +90,7 @@ let app = new Vue({
             });
 
             $.ajax({
-                url: '/laksa/get-last-used-targets',
+                url: '/get-last-used-targets',
                 success: function (data) {
                     app.lastUsedTargets = JSON.parse(data);
                 },
@@ -117,7 +117,7 @@ let app = new Vue({
                 howmuch = $('input[name=howmuch]').val();
 
             $.ajax({
-                url: '/laksa/new-record',
+                url: '/new-record',
                 method: "POST",
                 data: {
                     'year': year,
@@ -154,7 +154,7 @@ let app = new Vue({
         this.selectThisDay(day);
 
         $.ajax({
-            url: '/laksa/get-authors',
+            url: '/get-authors',
             success: function (data) {
                 app.authors = JSON.parse(data);
                 $("select[name=who-select]").val(app.authors[0].id);
@@ -163,7 +163,7 @@ let app = new Vue({
             }
         });
         $.ajax({
-            url: '/laksa/get-targets',
+            url: '/get-targets',
             success: function (data) {
                 app.targets = JSON.parse(data);
                 $("select[name=what-select]").val(app.targets[0].id);
