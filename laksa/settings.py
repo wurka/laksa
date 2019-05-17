@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
 	'185.178.47.235',
-	'localhost'
+	'localhost',
+	'zlaksa.ru'
 ]
 
 
