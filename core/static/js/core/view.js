@@ -31,6 +31,9 @@ let app = new Vue({
                 this.selectedTarget = e;
                 $("#what-select").val(e);
             }
+            if (this.selectedTarget === "-1") {
+                this.showNewTarget = true;
+            }
 
         },
         selectThisDay: function (e) {

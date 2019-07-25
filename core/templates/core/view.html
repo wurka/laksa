@@ -14,7 +14,7 @@
 <body>
     <div class="layout" id="app" v-cloak="'...loading...'">
         {% csrf_token %}
-        <div class="new-target" style="display: none;" v-if="showNewTarget">
+        <div class="new-target" v-if="showNewTarget">
             <div class="title">
                 Добавить новую цель
             </div>
@@ -33,7 +33,7 @@
                     <div class="button" onclick="submitNewTarget()">OK</div>
                 </div>
                 <div class="col-4">
-                    <div class="button" onclick="hideNewTarget()">Отмена</div>
+                    <div class="button" @click="showNewTarget=false; targetOnChange(targets[0].id)">Отмена</div>
                 </div>
             </div>
         </div>
